@@ -1,0 +1,2 @@
+def modifiedStackFill() -> list:
+    pass

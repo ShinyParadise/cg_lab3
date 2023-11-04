@@ -1,6 +1,7 @@
 import pygame
 import cartesianPlane
-import algorithms as algos
+from algorithms import *
+from structs import *
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -31,7 +32,10 @@ while True:
     plane.update()
 
     # draw here
-    algos.DDA(0, 0, 10, 10)
+    p1 = Point(0, 0, RED)
+    p2 = Point(10, 10, RED)
+    points = DDA(p1, p2)
+    print(points)
 
     clock.tick()
 

@@ -1,15 +1,18 @@
-def DDA(x1, y1, x2, y2) -> list:
+from structs.point import Point
+
+
+def DDA(p1: Point, p2: Point) -> list:
     points = []
-    if abs(x2 - x1) >= abs(y2 - y1):
-        length = abs(x2 - x1)
+    if abs(p2.x - p1.x) >= abs(p2.y - p1.y):
+        length = abs(p2.x - p1.x)
     else:
-        length = abs(y2 - y1)
+        length = abs(p2.y - p1.y)
 
-    dx = (x2 - x1) / length
-    dy = (y2 - y1) / length
+    dx = (p2.x - p1.x) / length
+    dy = (p2.y - p1.y) / length
 
-    x = x1 + 0.5 * sign(dx)
-    y = y1 + 0.5 * sign(dy)
+    x = p1.x + 0.5 * sign(dx)
+    y = p1.y + 0.5 * sign(dy)
 
     i = 1
     while i <= length:

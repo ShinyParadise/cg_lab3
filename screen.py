@@ -14,6 +14,7 @@ class Screen:
         pygame.display.set_caption('Lab 3')
         self.clock = pygame.time.Clock()
         self.plane = cartesianPlane.CartesianPlane(self.screen)
+        self.file = "lines_data.txt"
 
 
     def update_screen(self):
@@ -28,11 +29,15 @@ class Screen:
         )
 
     def run(self, delay: int | None = None):
+        point_data = open(self.file, 'r')
+        k, x, b = point_data.readline().split()
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
+                if event.type == pygame.KEYDOWN:
+                    k, x, b = point_data.readline().split()
 
                 self.plane.event_handling(event)
 
@@ -43,8 +48,10 @@ class Screen:
             # Update the plane
             self.plane.update()
 
+            #read data for new line
+
             # draw here
-            points = DDA(k=1)
+            points = DDA(k=int(k), x=int(x))
 
             for point in points:
                 self.draw_pixel(SIDE_LENGTH, point)

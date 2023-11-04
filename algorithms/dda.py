@@ -1,7 +1,7 @@
 from structs.point import Point
 
 
-def DDA(p1: Point, p2: Point) -> list:
+def DDA(p1: Point, p2: Point) -> list[Point]:
     points = []
     if abs(p2.x - p1.x) >= abs(p2.y - p1.y):
         length = abs(p2.x - p1.x)
@@ -16,7 +16,7 @@ def DDA(p1: Point, p2: Point) -> list:
 
     i = 1
     while i <= length:
-        points.append((int(x), int(y)))
+        points.append(Point(int(x), int(y), p1.color))
         x = x + dx
         y = y + dy
         i += 1

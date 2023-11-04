@@ -1,6 +1,6 @@
 from structs.point import Point
 
-def brezenheim(p1: Point, p2: Point) -> list:
+def brezenheim(p1: Point, p2: Point) -> list[Point]:
 
     points = []
     x = p1.x
@@ -10,7 +10,7 @@ def brezenheim(p1: Point, p2: Point) -> list:
     delta = - deltaX
 
     while x <= p2.x:
-        points.append((int(x), int(y)))
+        points.append(Point(int(x), int(y), p1.color))
         x += 1
         delta += deltaY
         if delta >= 0:

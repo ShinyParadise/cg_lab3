@@ -68,26 +68,17 @@ class Screen:
             # Update the plane
             self.plane.update()
 
-            #read data for new line
-
             # draw here
             points_dda = DDA(k=int(k), x=int(x))
             points_brez = brezenheim(k=int(k), x=int(x))
 
-            # БРЕЗЕНХЕЙМ СДОХ
             # find same pixel
-            same_points = []
             for point in points_dda:
-                if point in points_brez:
-                    same_points.append(point)
-                    points_dda.remove(point)
+                if points_brez.count(point):
                     points_brez.remove(point)
                 else:
                     point.color = BLUE
 
-            for point in same_points:
-                self.draw_pixel(SIDE_LENGTH, point)
-                self.do_delay(delay)
             for point in points_dda:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)

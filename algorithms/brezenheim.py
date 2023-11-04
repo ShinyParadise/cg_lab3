@@ -15,18 +15,27 @@ def brezenheim_two_points(p1: Point, p2: Point) -> list[Point]:
     '''алгоритм Брезенхема - входные параметры это начальная и конечная точка'''
 
     points = []
-    x = p1.x
-    y = p1.y
-    deltaX = (p2.x - p1.x) * 2
-    deltaY = (p2.y - p1.y) * 2
+    x1, y1 = p1.x, p1.y
+    x2, y2 = p2.x, p2.y
+    yChange = 1
+
+    if x1 > x2:
+        x1, x2 = x2, x1
+        y1, y2 = y2, y1
+
+    if y1 > y2:
+        yChange = -1
+
+    deltaX = (x2 - x1) * 2
+    deltaY = yChange * (y2 - y1) * 2
     delta = - deltaX
 
-    while x <= p2.x:
-        points.append(Point(int(x), int(y), p1.color))
-        x += 1
+    while x1 <= x2:
+        points.append(Point(int(x1), int(y1), p1.color))
+        x1 += 1
         delta += deltaY
         if delta >= 0:
-            y += 1
+            y1 += yChange
             delta -= deltaX
 
     return points

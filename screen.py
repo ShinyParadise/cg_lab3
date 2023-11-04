@@ -34,7 +34,7 @@ class Screen:
                     pygame.quit()
                     quit()
 
-            self.plane.event_handling(event)
+                self.plane.event_handling(event)
 
             self.plane.debug(
                 fps=f'{self.clock.get_fps():.1f}'
@@ -44,26 +44,18 @@ class Screen:
             self.plane.update()
 
             # draw here
-            p1 = Point(0, 0, RED)
-            p2 = Point(0, 10, RED)
-            p3 = Point(10, 0, RED)
-            p4 = Point(10, 10, RED)
-
-            points = DDA(p1, p2)
-            points += DDA(p2, p4)
-            points += DDA(p4, p3)
-            points += DDA(p3, p1)
+            points = DDA(k=1)
 
             for point in points:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)
 
-            to_fill = flood_fill(Point(5, 5, YELLOW), points, YELLOW, RED)
-            for point in to_fill:
-                self.draw_pixel(SIDE_LENGTH, point)
-                self.do_delay(delay) 
+            # to_fill = flood_fill(Point(5, 5, YELLOW), points, YELLOW, RED)
+            # for point in to_fill:
+            #     self.draw_pixel(SIDE_LENGTH, point)
+            #     self.do_delay(delay) 
 
-            self.clock.tick()
+            self.clock.tick(60)
             self.update_screen()
 
     def do_delay(self, delay):

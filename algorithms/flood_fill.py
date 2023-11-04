@@ -7,7 +7,7 @@ def flood_fill(start_point: Point, fill_color, border_color) -> list:
     # Инициализация списка точек для заполнения
     filled_points = []
 
-    flood_fill_recursive(start_point, border_color, filled_points)
+    flood_fill_recursive(start_point, fill_color, border_color, filled_points)
     return filled_points
 
 

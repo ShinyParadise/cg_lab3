@@ -38,7 +38,7 @@ class Screen:
         return self.screen.get_at((screen_coord[0], screen_coord[1]))[:3]
     
 
-    def run(self, delay: float | None = None):
+    def run_lines(self, delay: float | None = None):
         difference_DDA = 0
         difference_brez = 0
         point_data = open(self.file, 'r')
@@ -102,7 +102,7 @@ class Screen:
             self.update_screen()
 
 
-    def run_fill(self, delay: float | None = None):
+    def run_fish(self, delay: float | None = None):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -139,21 +139,43 @@ class Screen:
 
                 for point in points:
                     self.draw_pixel(SIDE_LENGTH, point)
+                    self.do_delay(delay)
 
-                to_fill = flood_fill(points[0], self.read_pixel, current_color, current_color)
+                # to_fill = flood_fill(points[0], self.read_pixel, current_color, current_color)
 
-                for point in to_fill:
-                    self.draw_pixel(SIDE_LENGTH, point)
+                # for point in to_fill:
+                #     self.draw_pixel(SIDE_LENGTH, point)
+                #     self.do_delay(delay)
 
             self.clock.tick(60)
             self.update_screen()
 
-    def test(self):
+    def run_fill(self, delay: float | None = None):
+        fig_num = -1
+        fig_count = len(SQUARES) - 1
+        result_file = open('square.txt', 'w')
+        x1, y1, x2, y2, x3, y3, x4, y4 = 0, 0, 0, 10, 10, 10, 10, 0
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    result_file.close()
                     pygame.quit()
                     quit()
+
+                if event.type == pygame.KEYDOWN and fig_num < fig_count:
+                    fig_num += 1
+                    x1, y1, x2, y2, x3, y3, x4, y4 = [e for e in SQUARES[fig_num]]
+                    self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
+                    start = timer()
+                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+                    end = timer()
+                    result_file.write(f'Flood fill: {timedelta(seconds=end - start)}, points number: {points_q} ')
+                    start = timer()
+                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+                    end = timer()
+                    result_file.write(f'Modified stack fill: {timedelta(seconds=end - start)}, points number: {points_q}\n')
+
                 self.plane.event_handling(event)
 
             self.plane.debug(
@@ -164,26 +186,31 @@ class Screen:
             self.plane.update()
 
             # draw here
-            p1 = Point(0, 0, RED)
-            p2 = Point(10, 0, RED)
-            p3 = Point(10, 10, RED)
-            p4 = Point(0, 10, RED)
-
-            points = DDA_two_points(p1, p2)
-            points += DDA_two_points(p2, p3)
-            points += DDA_two_points(p3, p4)
-            points += DDA_two_points(p4, p1)
-
-            for point in points:
-                self.draw_pixel(SIDE_LENGTH, point)
-
+            self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
             to_fill = flood_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
             for point in to_fill:
                 self.draw_pixel(SIDE_LENGTH, point)
+                self.do_delay(delay)
 
             self.clock.tick(60)
-            self.update_screen()   
 
+            # Update the screen
+            pygame.display.update()
+
+
+    def draw_borders(self, x1, y1, x2, y2, x3, y3, x4, y4):
+        p1 = Point(x1, y1, RED)
+        p2 = Point(x2, y2, RED)
+        p3 = Point(x3, y3, RED)
+        p4 = Point(x4, y4, RED)
+
+        dots = DDA_two_points(p1, p2)
+        dots += DDA_two_points(p2, p3)
+        dots += DDA_two_points(p3, p4)
+        dots += DDA_two_points(p4, p1)
+
+        for dot in dots:
+            self.draw_pixel(SIDE_LENGTH, dot)
 
 
     def do_delay(self, delay):

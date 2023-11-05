@@ -33,6 +33,8 @@ class Screen:
         )
 
     def run(self, delay: int | None = None):
+        difference_DDA = 0
+        difference_brez = 0
         point_data = open(self.file, 'r')
         time_measure = open(self.time_measure, 'w')
         k, x, b = point_data.readline().split()
@@ -45,16 +47,17 @@ class Screen:
                     quit()
                 if event.type == pygame.KEYDOWN:
                     line = point_data.readline()
+                    time_measure.write(f' {difference_DDA} {difference_brez}\n')
                     if line:
                         k, x, b = line.split()
                         start = timer()
-                        DDA(k=float(k), x=int(x))
+                        points_q = len(DDA(k=float(k), x=int(x)))
                         end = timer()
-                        time_measure.write(f'DDA: {timedelta(seconds=end-start)} ')
+                        time_measure.write(f'DDA: {timedelta(seconds=end-start)}, points number: {points_q} ')
                         start = timer()
-                        brezenheim(k=float(k), x=int(x))
+                        points_q = len(brezenheim(k=float(k), x=int(x)))
                         end = timer()
-                        time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}\n')
+                        time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}, points number: {points_q}')
 
                 self.plane.event_handling(event)
 
@@ -70,11 +73,15 @@ class Screen:
             points_brez = brezenheim(k=float(k), x=int(x))
 
             # find same pixel
+            difference_DDA = 0
+            difference_brez = 0
             for point in points_dda:
                 if points_brez.count(point):
+
                     points_brez.remove(point)
                 else:
                     point.color = BLUE
+                    difference_DDA += 1
 
             for point in points_dda:
                 self.draw_pixel(SIDE_LENGTH, point)
@@ -84,6 +91,7 @@ class Screen:
                 point.color = YELLOW
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)
+                difference_brez += 1
 
             # to_fill = flood_fill(Point(5, 5, YELLOW), points_dda, YELLOW, RED)
             # for point in to_fill:

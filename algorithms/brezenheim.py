@@ -17,25 +17,32 @@ def brezenheim_two_points(p1: Point, p2: Point) -> list[Point]:
     points = []
     x1, y1 = p1.x, p1.y
     x2, y2 = p2.x, p2.y
-    yChange = 1
 
-    if x1 > x2:
-        x1, x2 = x2, x1
-        y1, y2 = y2, y1
+    deltaY = y2 - y1
+    deltaX = x1 - x2
+    signY = 1
+    signX = 1
+    if deltaY < 0:
+        signY = -1
+    if deltaX < 0:
+        signX = -1
 
-    if y1 > y2:
-        yChange = -1
-
-    deltaX = (x2 - x1) * 2
-    deltaY = yChange * (y2 - y1) * 2
-    delta = - deltaX
-
-    while x1 <= x2:
-        points.append(Point(int(x1), int(y1), p1.color))
-        x1 += 1
-        delta += deltaY
-        if delta >= 0:
-            y1 += yChange
-            delta -= deltaX
-
+    f = 0
+    points.append(p1)
+    if abs(deltaY) < abs(deltaX):
+        while x1 != x2 or y1 != y2:
+            f += deltaY * signY
+            if f > 0:
+                f -= deltaX * signX
+                y1 += signY
+            x1 -= signX
+            points.append(Point(x1, y1, p1.color))
+    else:
+        while x1 != x2 or y1 != y2:
+            f += deltaX * signX
+            if f > 0:
+                f -= deltaY * signY
+                x1 -= signX
+            y1 += signY
+            points.append(Point(x1, y1, p1.color))
     return points

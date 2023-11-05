@@ -138,23 +138,52 @@ class Screen:
                     p1 = p2
 
                 for point in points:
-                    cartesianPlane.draw.rect(
-                        self.plane,
-                        point.color,
-                        (point.x * SIDE_LENGTH, point.y * SIDE_LENGTH + SIDE_LENGTH, SIDE_LENGTH, SIDE_LENGTH)
-                    )
+                    self.draw_pixel(SIDE_LENGTH, point)
 
                 to_fill = flood_fill(points[0], self.read_pixel, current_color, current_color)
 
                 for point in to_fill:
-                    cartesianPlane.draw.rect(
-                        self.plane,
-                        point.color,
-                        (point.x * SIDE_LENGTH, point.y * SIDE_LENGTH + SIDE_LENGTH, SIDE_LENGTH, SIDE_LENGTH)
-                    )
+                    self.draw_pixel(SIDE_LENGTH, point)
 
             self.clock.tick(60)
             self.update_screen()
+
+    def test(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+                self.plane.event_handling(event)
+
+            self.plane.debug(
+                fps=f'{self.clock.get_fps():.1f}'
+            )
+
+            # Update the plane
+            self.plane.update()
+
+            # draw here
+            p1 = Point(0, 0, RED)
+            p2 = Point(10, 0, RED)
+            p3 = Point(10, 10, RED)
+            p4 = Point(0, 10, RED)
+
+            points = DDA_two_points(p1, p2)
+            points += DDA_two_points(p2, p3)
+            points += DDA_two_points(p3, p4)
+            points += DDA_two_points(p4, p1)
+
+            for point in points:
+                self.draw_pixel(SIDE_LENGTH, point)
+
+            to_fill = flood_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
+            for point in to_fill:
+                self.draw_pixel(SIDE_LENGTH, point)
+
+            self.clock.tick(60)
+            self.update_screen()   
+
 
 
     def do_delay(self, delay):

@@ -1,0 +1,11 @@
+ 3 4
+DDA: 0:00:00.000073, points number: 10 Brezenheim: 0:00:00.000030, points number: 11 2 3
+DDA: 0:00:00.000073, points number: 10 Brezenheim: 0:00:00.000028, points number: 11 1 2
+DDA: 0:00:00.000073, points number: 10 Brezenheim: 0:00:00.000032, points number: 11 0 1
+DDA: 0:00:00.000161, points number: 56 Brezenheim: 0:00:00.000079, points number: 57 30 31
+DDA: 0:00:00.000163, points number: 56 Brezenheim: 0:00:00.000078, points number: 57 30 31
+DDA: 0:00:00.000082, points number: 10 Brezenheim: 0:00:00.000032, points number: 11 0 1
+DDA: 0:00:00.000086, points number: 10 Brezenheim: 0:00:00.000024, points number: 11 1 2
+DDA: 0:00:00.000076, points number: 10 Brezenheim: 0:00:00.000031, points number: 11 2 3
+DDA: 0:00:00.000080, points number: 10 Brezenheim: 0:00:00.000027, points number: 11 3 4
+ 3 4

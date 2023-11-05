@@ -1,0 +1,11 @@
+DDA: 0:00:00.000617, points number: 600 Brezenheim: 0:00:00.000483, points number: 601 0 1
+DDA: 0:00:00.000460, points number: 800 Brezenheim: 0:00:00.000370, points number: 801 200 201
+DDA: 0:00:00.000420, points number: 700 Brezenheim: 0:00:00.000331, points number: 701 300 301
+DDA: 0:00:00.000233, points number: 400 Brezenheim: 0:00:00.000218, points number: 401 0 1
+DDA: 0:00:00.000414, points number: 600 Brezenheim: 0:00:00.000379, points number: 601 0 1
+DDA: 0:00:00.000337, points number: 600 Brezenheim: 0:00:00.000302, points number: 601 0 1
+DDA: 0:00:00.000702, points number: 1200 Brezenheim: 0:00:00.000637, points number: 1201 400 401
+DDA: 0:00:00.000380, points number: 600 Brezenheim: 0:00:00.000322, points number: 601 0 1
+DDA: 0:00:00.000248, points number: 400 Brezenheim: 0:00:00.000198, points number: 401 100 101
+DDA: 0:00:00.000041, points number: 30 Brezenheim: 0:00:00.000026, points number: 31 0 1
+DDA: 0:00:00.000058, points number: 45 Brezenheim: 0:00:00.000037, points number: 46 15 16

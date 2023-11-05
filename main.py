@@ -3,5 +3,5 @@ from screen import Screen
 
 # Set up the window
 screen = Screen()
-screen.run()
-# screen.run_fill()
+# screen.run()
+screen.run_fill()

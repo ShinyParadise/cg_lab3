@@ -119,21 +119,23 @@ class Screen:
             self.plane.update()
 
             # draw here
-            p1 = Point(0, 0, RED)
-            p2 = Point(10, 0, RED)
-            p3 = Point(10, 10, RED)
-            p4 = Point(0, 10, RED)
+            p1 = Point(-4, 3, RED)
+            p2 = Point(-2, 5, RED)
+            p3 = Point(-2, 1, RED)
+            p1.multiply(3)
+            p2.multiply(3)
+            p3.multiply(3)
 
             points_dda = DDA_two_points(p1, p2)
             points_dda += DDA_two_points(p2, p3)
-            points_dda += DDA_two_points(p3, p4)
-            points_dda += DDA_two_points(p4, p1)
+            points_dda += DDA_two_points(p3, p1)
+
 
             for point in points_dda:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)
             
-            to_fill = flood_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
+            to_fill = flood_fill(Point(-9, 7, YELLOW), self.read_pixel, YELLOW, RED)
             for point in to_fill:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay) 

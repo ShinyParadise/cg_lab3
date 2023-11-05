@@ -1,5 +1,5 @@
 class Point:
-    def __init__(self, x, y, color) -> None:
+    def __init__(self, x: int, y: int, color: tuple) -> None:
         self.color = color
         self.x = x
         self.y = y

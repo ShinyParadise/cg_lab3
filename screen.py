@@ -32,7 +32,13 @@ class Screen:
                 (point.x * side_length, point.y * side_length + side_length, side_length, side_length)
         )
 
-    def run(self, delay: int | None = None):
+
+    def read_pixel(self, x_y: tuple | list) -> tuple:
+        screen_coord = self.plane.plane_to_screen((x_y[0] * SIDE_LENGTH, x_y[1] * SIDE_LENGTH + SIDE_LENGTH))
+        return self.screen.get_at((screen_coord[0], screen_coord[1]))[:3]
+    
+
+    def run(self, delay: float | None = None):
         point_data = open(self.file, 'r')
         time_measure = open(self.time_measure, 'w')
         k, x, b = point_data.readline().split()
@@ -85,10 +91,45 @@ class Screen:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)
 
-            # to_fill = flood_fill(Point(5, 5, YELLOW), points_dda, YELLOW, RED)
-            # for point in to_fill:
-            #     self.draw_pixel(SIDE_LENGTH, point)
-            #     self.do_delay(delay) 
+            self.clock.tick(60)
+            self.update_screen()
+
+
+    def run_fill(self, delay: float | None = None):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+                
+                self.plane.event_handling(event)
+
+            self.plane.debug(
+                fps=f'{self.clock.get_fps():.1f}'
+            )
+
+            # Update the plane
+            self.plane.update()
+
+            # draw here
+            p1 = Point(0, 0, RED)
+            p2 = Point(10, 0, RED)
+            p3 = Point(10, 10, RED)
+            p4 = Point(0, 10, RED)
+
+            points_dda = DDA_two_points(p1, p2)
+            points_dda += DDA_two_points(p2, p3)
+            points_dda += DDA_two_points(p3, p4)
+            points_dda += DDA_two_points(p4, p1)
+
+            for point in points_dda:
+                self.draw_pixel(SIDE_LENGTH, point)
+                self.do_delay(delay)
+            
+            to_fill = flood_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
+            for point in to_fill:
+                self.draw_pixel(SIDE_LENGTH, point)
+                self.do_delay(delay) 
 
             self.clock.tick(60)
             self.update_screen()

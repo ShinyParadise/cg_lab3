@@ -48,11 +48,11 @@ class Screen:
                     if line:
                         k, x, b = line.split()
                         start = timer()
-                        DDA(k=int(k), x=int(x))
+                        DDA(k=float(k), x=int(x))
                         end = timer()
                         time_measure.write(f'DDA: {timedelta(seconds=end-start)} ')
                         start = timer()
-                        brezenheim(k=int(k), x=int(x))
+                        brezenheim(k=float(k), x=int(x))
                         end = timer()
                         time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}\n')
 
@@ -66,8 +66,8 @@ class Screen:
             self.plane.update()
 
             # draw here
-            points_dda = DDA(k=int(k), x=int(x))
-            points_brez = brezenheim(k=int(k), x=int(x))
+            points_dda = DDA(k=float(k), x=int(x))
+            points_brez = brezenheim(k=float(k), x=int(x))
 
             # find same pixel
             for point in points_dda:

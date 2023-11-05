@@ -3,7 +3,7 @@ from helper_funcs import calculate_line_points
 from structs.point import Point
 
 
-def DDA(color: tuple = RED, k: int = 1, x: int = 30, b: int = 0) -> list[Point]:
+def DDA(color: tuple = RED, k: float = 1, x: int = 30, b: int = 0) -> list[Point]:
     '''алгоритм ЦДА - входные параметры задают уравнение прямой y=kx+b'''
 
     p1, p2 = calculate_line_points(color, k, x, b)

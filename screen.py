@@ -164,14 +164,14 @@ class Screen:
                     x1, y1, x2, y2, x3, y3, x4, y4 = [e for e in SQUARES[fig_num]]
                     self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
                     start = timer()
-                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+                    flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED)
                     end = timer()
-                    result_file.write(f'Flood fill: {timedelta(seconds=end - start)}, points number: {points_q} ')
+                    result_file.write(f'Flood fill: {timedelta(seconds=end - start)} ')
                     start = timer()
-                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+                    modified_stack_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED)
                     end = timer()
-                    result_file.write(f'Modified stack fill: {timedelta(seconds=end - start)}, points number: {points_q}\n')
-        
+                    result_file.write(f'Modified stack fill: {timedelta(seconds=end - start)}\n')
+
                 self.plane.event_handling(event)
 
             self.plane.debug(fps=f'{self.clock.get_fps():.1f}')
@@ -181,7 +181,7 @@ class Screen:
 
             # draw here
             self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
-            to_fill = flood_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
+            to_fill = modified_stack_fill(Point(5, 5, YELLOW), self.read_pixel, YELLOW, RED)
             for point in to_fill:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)

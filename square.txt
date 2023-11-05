@@ -1,5 +1,0 @@
-Flood fill: 0:00:00.012140, points number: 64 Modified stack fill: 0:00:00.010815, points number: 64
-Flood fill: 0:00:00.010928, points number: 64 Modified stack fill: 0:00:00.012403, points number: 64
-Flood fill: 0:00:00.073646, points number: 169 Modified stack fill: 0:00:00.066460, points number: 169
-Flood fill: 0:00:00.255738, points number: 324 Modified stack fill: 0:00:00.248996, points number: 324
-Flood fill: 0:00:00.704776, points number: 529 Modified stack fill: 0:00:00.695054, points number: 529

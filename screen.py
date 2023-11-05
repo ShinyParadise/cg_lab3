@@ -34,6 +34,7 @@ class Screen:
 
 
     def read_pixel(self, x_y: tuple | list) -> tuple:
+        # Здесь нужно преобразование из координат на плоскости в координату реального пикселя окна
         screen_coord = self.plane.plane_to_screen((x_y[0] * SIDE_LENGTH, x_y[1] * SIDE_LENGTH + SIDE_LENGTH))
         return self.screen.get_at((screen_coord[0], screen_coord[1]))[:3]
     

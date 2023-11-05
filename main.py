@@ -5,5 +5,5 @@ from screen import Screen
 screen = Screen()
 
 # screen.run_fish()
-screen.run_fill()
-# screen.run_lines()
+# screen.run_fill()
+screen.run_lines()

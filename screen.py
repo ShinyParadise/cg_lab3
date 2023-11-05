@@ -108,7 +108,6 @@ class Screen:
                 if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     quit()
-                
                 self.plane.event_handling(event)
 
             self.plane.debug(
@@ -119,29 +118,44 @@ class Screen:
             self.plane.update()
 
             # draw here
-            p1 = Point(-4, 3, RED)
-            p2 = Point(-2, 5, RED)
-            p3 = Point(-2, 1, RED)
-            p1.multiply(3)
-            p2.multiply(3)
-            p3.multiply(3)
+            color_mark = -1
+            multiplier = 10
+            for figure in FIGURES:
+                color_mark += 1
+                current_color = COLORS[color_mark]
+                points = []
+                p1 = Point(figure[0][0], figure[0][1], current_color)
+                p2 = Point(figure[len(figure) - 1][0], figure[len(figure) - 1][1], current_color)
 
-            points_dda = DDA_two_points(p1, p2)
-            points_dda += DDA_two_points(p2, p3)
-            points_dda += DDA_two_points(p3, p1)
+                p1.multiply(multiplier)
+                p2.multiply(multiplier)
+                points += DDA_two_points(p1, p2)
 
+                for i in range(1, len(figure)):
+                    p2 = Point(figure[i][0], figure[i][1], current_color)
+                    p2.multiply(multiplier)
+                    points += DDA_two_points(p1, p2)
+                    p1 = p2
 
-            for point in points_dda:
-                self.draw_pixel(SIDE_LENGTH, point)
-                self.do_delay(delay)
-            
-            to_fill = flood_fill(Point(-9, 7, YELLOW), self.read_pixel, YELLOW, RED)
-            for point in to_fill:
-                self.draw_pixel(SIDE_LENGTH, point)
-                self.do_delay(delay) 
+                for point in points:
+                    cartesianPlane.draw.rect(
+                        self.plane,
+                        point.color,
+                        (point.x * SIDE_LENGTH, point.y * SIDE_LENGTH + SIDE_LENGTH, SIDE_LENGTH, SIDE_LENGTH)
+                    )
+
+                to_fill = flood_fill(points[0], self.read_pixel, current_color, current_color)
+
+                for point in to_fill:
+                    cartesianPlane.draw.rect(
+                        self.plane,
+                        point.color,
+                        (point.x * SIDE_LENGTH, point.y * SIDE_LENGTH + SIDE_LENGTH, SIDE_LENGTH, SIDE_LENGTH)
+                    )
 
             self.clock.tick(60)
             self.update_screen()
+
 
     def do_delay(self, delay):
         if delay is not None:

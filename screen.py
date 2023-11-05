@@ -6,7 +6,8 @@ from algorithms import *
 from constants import *
 from structs.point import *
 
-import time
+from timeit import default_timer as timer
+from datetime import timedelta
 
 
 class Screen:
@@ -45,19 +46,15 @@ class Screen:
                 if event.type == pygame.KEYDOWN:
                     line = point_data.readline()
                     if line:
-                        # ОНО НЕ РАБОТАЕТ НОРМАЛЬНО, ПИШЕТ ЧЕРЕЗ РАЗ НУЛИ, БРЕЗЕНХЕЙМА ВООБЩЕ НЕ СЧИТАЕТ
-                        # дебаг отвалился полностью, буду считать, что виновато железо
-                        # count execution time in ms
-                        # without display, without scale
                         k, x, b = line.split()
-                        start = time.time()
+                        start = timer()
                         DDA(k=int(k), x=int(x))
-                        end = time.time()
-                        time_measure.write(f'DDA: {(end - start) * 1000} ')
-                        start = time.time()
+                        end = timer()
+                        time_measure.write(f'DDA: {timedelta(seconds=end-start)} ')
+                        start = timer()
                         brezenheim(k=int(k), x=int(x))
-                        end = time.time()
-                        time_measure.write(f'Brezenheim: {(end - start) * 1000}\n')
+                        end = timer()
+                        time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}\n')
 
                 self.plane.event_handling(event)
 
@@ -82,6 +79,7 @@ class Screen:
             for point in points_dda:
                 self.draw_pixel(SIDE_LENGTH, point)
                 self.do_delay(delay)
+
             for point in points_brez:
                 point.color = YELLOW
                 self.draw_pixel(SIDE_LENGTH, point)

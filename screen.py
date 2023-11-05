@@ -46,30 +46,9 @@ class Screen:
         k, x, b = point_data.readline().split()
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    point_data.close()
-                    time_measure.close()
-                    quit()
-                if event.type == pygame.KEYDOWN:
-                    line = point_data.readline()
-                    time_measure.write(f' {difference_DDA} {difference_brez}\n')
-                    if line:
-                        k, x, b = line.split()
-                        start = timer()
-                        points_q = len(DDA(k=float(k), x=int(x)))
-                        end = timer()
-                        time_measure.write(f'DDA: {timedelta(seconds=end-start)}, points number: {points_q} ')
-                        start = timer()
-                        points_q = len(brezenheim(k=float(k), x=int(x)))
-                        end = timer()
-                        time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}, points number: {points_q}')
+                k, x = self.handle_line_events(difference_DDA, difference_brez, point_data, time_measure, event)
 
-                self.plane.event_handling(event)
-
-            self.plane.debug(
-                fps=f'{self.clock.get_fps():.1f}'
-            )
+            self.plane.debug(fps=f'{self.clock.get_fps():.1f}')
 
             # Update the plane
             self.plane.update()
@@ -110,9 +89,7 @@ class Screen:
                     quit()
                 self.plane.event_handling(event)
 
-            self.plane.debug(
-                fps=f'{self.clock.get_fps():.1f}'
-            )
+            self.plane.debug(fps=f'{self.clock.get_fps():.1f}')
 
             # Update the plane
             self.plane.update()
@@ -158,29 +135,9 @@ class Screen:
 
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    result_file.close()
-                    pygame.quit()
-                    quit()
+                x1, y1, x2, y2, x3, y3, x4, y4 = self.handle_fill_events(fig_num, fig_count, result_file, event)
 
-                if event.type == pygame.KEYDOWN and fig_num < fig_count:
-                    fig_num += 1
-                    x1, y1, x2, y2, x3, y3, x4, y4 = [e for e in SQUARES[fig_num]]
-                    self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
-                    start = timer()
-                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
-                    end = timer()
-                    result_file.write(f'Flood fill: {timedelta(seconds=end - start)}, points number: {points_q} ')
-                    start = timer()
-                    points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
-                    end = timer()
-                    result_file.write(f'Modified stack fill: {timedelta(seconds=end - start)}, points number: {points_q}\n')
-
-                self.plane.event_handling(event)
-
-            self.plane.debug(
-                fps=f'{self.clock.get_fps():.1f}'
-            )
+            self.plane.debug(fps=f'{self.clock.get_fps():.1f}')
 
             # Update the plane
             self.plane.update()
@@ -217,3 +174,50 @@ class Screen:
         if delay is not None:
             sleep(delay)
             self.update_screen()
+
+
+    def handle_line_events(self, difference_DDA, difference_brez, point_data, time_measure, event):
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            pygame.quit()
+            point_data.close()
+            time_measure.close()
+            quit()
+        if event.type == pygame.KEYDOWN:
+            line = point_data.readline()
+            time_measure.write(f' {difference_DDA} {difference_brez}\n')
+            if line:
+                k, x, b = line.split()
+                start = timer()
+                points_q = len(DDA(k=float(k), x=int(x)))
+                end = timer()
+                time_measure.write(f'DDA: {timedelta(seconds=end-start)}, points number: {points_q} ')
+                start = timer()
+                points_q = len(brezenheim(k=float(k), x=int(x)))
+                end = timer()
+                time_measure.write(f'Brezenheim: {timedelta(seconds=end-start)}, points number: {points_q}')
+
+        self.plane.event_handling(event)
+        return k,x
+    
+    
+    def handle_fill_events(self, fig_num, fig_count, result_file, event):
+        if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            result_file.close()
+            pygame.quit()
+            quit()
+
+        if event.type == pygame.KEYDOWN and fig_num < fig_count:
+            fig_num += 1
+            x1, y1, x2, y2, x3, y3, x4, y4 = [e for e in SQUARES[fig_num]]
+            self.draw_borders(x1, y1, x2, y2, x3, y3, x4, y4)
+            start = timer()
+            points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+            end = timer()
+            result_file.write(f'Flood fill: {timedelta(seconds=end - start)}, points number: {points_q} ')
+            start = timer()
+            points_q = len(flood_fill(Point(2, 2, YELLOW), self.read_pixel, YELLOW, RED))
+            end = timer()
+            result_file.write(f'Modified stack fill: {timedelta(seconds=end - start)}, points number: {points_q}\n')
+
+        self.plane.event_handling(event)
+        return x1,y1,x2,y2,x3,y3,x4,y4

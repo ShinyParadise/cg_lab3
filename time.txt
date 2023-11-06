@@ -1,10 +1,11 @@
- 18 19
-DDA: 0:00:00.000195, points number: 40 Brezenheim: 0:00:00.000119, points number: 41 9 10
-DDA: 0:00:00.000204, points number: 40 Brezenheim: 0:00:00.000104, points number: 41 17 18
-DDA: 0:00:00.000208, points number: 40 Brezenheim: 0:00:00.000110, points number: 41 0 1
-DDA: 0:00:00.000652, points number: 226 Brezenheim: 0:00:00.000459, points number: 227 126 127
-DDA: 0:00:00.000704, points number: 226 Brezenheim: 0:00:00.000466, points number: 227 126 127
-DDA: 0:00:00.000261, points number: 40 Brezenheim: 0:00:00.000127, points number: 41 0 1
-DDA: 0:00:00.000384, points number: 40 Brezenheim: 0:00:00.000175, points number: 41 17 18
-DDA: 0:00:00.000216, points number: 40 Brezenheim: 0:00:00.000182, points number: 41 9 10
-DDA: 0:00:00.000381, points number: 40 Brezenheim: 0:00:00.000199, points number: 41 18 19
+ 2 1
+DDA: 0:00:00.000110, points number: 40 Brezenheim: 0:00:00.000080, points number: 39 10 9
+DDA: 0:00:00.000113, points number: 40 Brezenheim: 0:00:00.000082, points number: 39 3 2
+DDA: 0:00:00.000118, points number: 40 Brezenheim: 0:00:00.000086, points number: 39 1 0
+DDA: 0:00:00.000426, points number: 226 Brezenheim: 0:00:00.000292, points number: 225 15 14
+DDA: 0:00:00.000439, points number: 226 Brezenheim: 0:00:00.000299, points number: 225 15 14
+DDA: 0:00:00.000106, points number: 40 Brezenheim: 0:00:00.000087, points number: 39 1 0
+DDA: 0:00:00.000109, points number: 40 Brezenheim: 0:00:00.000077, points number: 39 3 2
+DDA: 0:00:00.000124, points number: 40 Brezenheim: 0:00:00.000081, points number: 39 10 9
+DDA: 0:00:00.000112, points number: 40 Brezenheim: 0:00:00.000063, points number: 39 2 1
+ 2 1

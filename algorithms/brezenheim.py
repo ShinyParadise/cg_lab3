@@ -1,5 +1,5 @@
 from constants import RED
-from helper_funcs import calculate_line_points
+from helper_funcs import calculate_line_points, sign
 from structs.point import Point
 
 
@@ -15,34 +15,39 @@ def brezenheim_two_points(p1: Point, p2: Point) -> list[Point]:
     '''алгоритм Брезенхема - входные параметры это начальная и конечная точка'''
 
     points = []
-    x1, y1 = int(p1.x), int(p1.y)
-    x2, y2 = int(p2.x), int(p2.y)
+    x1, y1, x2, y2 = int(p1.x), int(p1.y), int(p2.x), int(p2.y)
 
-    deltaY = y2 - y1
-    deltaX = x1 - x2
-    signY = 1
-    signX = 1
-    if deltaY < 0:
-        signY = -1
-    if deltaX < 0:
-        signX = -1
+    x = x1
+    y = y1
+    dx = abs(x2-x1)
+    dy = abs(y2-y1)
 
-    f = 0
-    points.append(p1)
-    if abs(deltaY) < abs(deltaX):
-        while x1 != x2 or y1 != y2:
-            f += deltaY * signY
-            if f > 0:
-                f -= deltaX * signX
-                y1 += signY
-            x1 -= signX
-            points.append(Point(x1, y1, p1.color))
-    else:
-        while x1 != x2 or y1 != y2:
-            f += deltaX * signX
-            if f > 0:
-                f -= deltaY * signY
-                x1 -= signX
-            y1 += signY
-            points.append(Point(x1, y1, p1.color))
+    s1 = sign(x2-x1)
+    s2 = sign(y2-y1)
+
+    change = False
+    if dy > dx:
+        dx, dy = dy, dx
+        change = True
+    
+    e = 2 * dy - dx
+
+    i = 1
+    while i != dx:
+        while e >= 0:
+            if change:
+                x += s1
+            else:
+                y += s2
+            e -= 2 * dx
+
+        if change:
+            y += s2
+        else:
+            x += s1
+
+        e += 2 * dy
+        i += 1
+        points.append(Point(x, y, p1.color))
+    
     return points

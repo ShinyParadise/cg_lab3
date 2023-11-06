@@ -1,5 +1,5 @@
 from constants import RED
-from helper_funcs import calculate_line_points
+from helper_funcs import calculate_line_points, sign
 from structs.point import Point
 
 
@@ -33,10 +33,3 @@ def DDA_two_points(p1: Point, p2: Point) -> list[Point]:
         i += 1
 
     return points
-
-
-def sign(x):
-    if (x > 0):
-        return 1
-    else:
-        return -1

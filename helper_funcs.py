@@ -14,3 +14,10 @@ def calculate_line_points(color, k: float, x: int, b: int) -> tuple[Point, Point
         p2 = Point(p2x, p2y, color)
     
     return p1,p2
+
+
+def sign(x):
+    if (x > 0):
+        return 1
+    else:
+        return -1

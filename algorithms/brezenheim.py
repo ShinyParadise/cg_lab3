@@ -32,7 +32,7 @@ def brezenheim_two_points(p1: Point, p2: Point) -> list[Point]:
     
     e = 2 * dy - dx
 
-    i = 1
+    i = 0
     while i != dx:
         while e >= 0:
             if change:

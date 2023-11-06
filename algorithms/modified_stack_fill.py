@@ -18,42 +18,41 @@ def modified_stack(start_point: Point, get_pixel: Callable[[tuple], tuple], fill
         find_lower = False
 
         work_point = stack_points.pop()
-        float_point = Point(work_point.x + 1, work_point.y, fill_color)
-        filled_points.append(work_point)
-        # to the right
+        x_coord = work_point.x
 
-        while float_point not in filled_points and not check_for_border(float_point, get_pixel, border_color):
-            filled_points.append(float_point)
+        # to the right
+        while work_point not in filled_points and not check_for_border(work_point, get_pixel, border_color):
+            filled_points.append(Point(work_point.x, work_point.y, fill_color))
+            work_point.y += 1
             if not find_upper and not \
-                    check_for_border(Point(float_point.x, float_point.y + 1, border_color),
-                                     get_pixel, border_color) and\
-                    Point(float_point.x, float_point.y + 1, fill_color) not in filled_points:
+                    check_for_border(work_point, get_pixel, border_color) and work_point not in filled_points:
                 find_upper = True
-                stack_points.append(Point(float_point.x, float_point.y + 1, border_color))
+                stack_points.append(Point(work_point.x, work_point.y, fill_color))
+
+            work_point.y -= 2
             if not find_lower and not \
-                    check_for_border(Point(float_point.x, float_point.y - 1, border_color),
-                                     get_pixel, border_color) and\
-                    Point(float_point.x, float_point.y - 1, fill_color) not in filled_points:
+                    check_for_border(work_point, get_pixel, border_color) and work_point not in filled_points:
                 find_lower = True
-                stack_points.append(Point(float_point.x, float_point.y - 1, fill_color))
-            float_point.x += 1
+                stack_points.append(Point(work_point.x, work_point.y, fill_color))
+            work_point.x += 1
+            work_point.y += 1
 
         # to the left
-        float_point = Point(work_point.x - 1, work_point.y, fill_color)
-        while float_point not in filled_points and not check_for_border(float_point, get_pixel, border_color):
+        work_point.x = x_coord - 1
+        while work_point not in filled_points and not check_for_border(work_point, get_pixel, border_color):
+            filled_points.append(Point(work_point.x, work_point.y, fill_color))
+            work_point.y += 1
             if not find_upper and not \
-                    check_for_border(Point(float_point.x, float_point.y + 1, border_color),
-                                     get_pixel, border_color) and\
-                    Point(float_point.x, float_point.y + 1, fill_color) not in filled_points:
+                    check_for_border(work_point, get_pixel, border_color) and work_point not in filled_points:
                 find_upper = True
-                stack_points.append(Point(float_point.x, float_point.y + 1, border_color))
+                stack_points.append(Point(work_point.x, work_point.y, fill_color))
+            work_point.y -= 2
             if not find_lower and not \
-                    check_for_border(Point(float_point.x, float_point.y - 1, border_color),
-                                     get_pixel, border_color) and\
-                    Point(float_point.x, float_point.y - 1, fill_color) not in filled_points:
+                    check_for_border(work_point, get_pixel, border_color) and work_point not in filled_points:
                 find_lower = True
-                stack_points.append(Point(float_point.x, float_point.y - 1, fill_color))
-            float_point.x -= 1
+                stack_points.append(Point(work_point.x, work_point.y, fill_color))
+            work_point.y += 1
+            work_point.x -= 1
 
     return filled_points
 

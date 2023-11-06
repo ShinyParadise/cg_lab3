@@ -2,6 +2,7 @@ from time import sleep
 import pygame
 import cartesianPlane
 
+import constants
 from algorithms import *
 from constants import *
 from structs.point import *
@@ -13,7 +14,7 @@ from datetime import timedelta
 class Screen:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((800, 800))
         pygame.display.set_caption('Lab 3')
         self.clock = pygame.time.Clock()
         self.plane = cartesianPlane.CartesianPlane(self.screen)
@@ -57,6 +58,7 @@ class Screen:
                     time_measure.write(f' {difference_DDA} {difference_brez}\n')
                     if line:
                         k, x, b = line.split()
+                        x = int((float(x) ** 2 / (float(k) ** 2 + 1)) ** 0.5)
                         start = timer()
                         points_q = len(DDA(k=float(k), x=int(x)))
                         end = timer()
@@ -74,6 +76,7 @@ class Screen:
             self.plane.update()
 
             # draw here
+
             points_dda = DDA(k=float(k), x=int(x))
             points_brez = brezenheim(k=float(k), x=int(x))
 
@@ -138,11 +141,14 @@ class Screen:
                     self.draw_pixel(SIDE_LENGTH, point)
                     self.do_delay(delay)
 
-                # to_fill = flood_fill(points[0], self.read_pixel, current_color, current_color)
+#                self.update_screen()
 
-                # for point in to_fill:
-                #     self.draw_pixel(SIDE_LENGTH, point)
-                #     self.do_delay(delay)
+                start_point = Point(START_POINTS[color_mark][0], START_POINTS[color_mark][1], current_color)
+                start_point.multiply(multiplier)
+                to_fill = modified_stack_fill(start_point, self.read_pixel, current_color, current_color)
+                for point in to_fill:
+                     self.draw_pixel(SIDE_LENGTH, point)
+                     self.do_delay(delay)
 
             self.clock.tick(60)
             self.update_screen()
